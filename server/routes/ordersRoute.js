@@ -1,15 +1,21 @@
 const express = require('express');
 const router = express.Router();
 
+const models = require('../db/models');
+const Order = models.Orders
+
 router.get('/', (req, res, next) => {
   res.status(200).send({ message: 'usando GET na rota order' 
   })
 })
 
 router.post('/', (req, res, next) => {
-  res.status(201).send({ message: 'usando POST na rota order' 
+  Order.create(req.body);
+    res.send('certo')
   })
-})
+  // res.status(201).send({ message: 'usando POST na rota order' 
+  // })
+
 
 router.get('/:orderId', (req, res, next) => {
   const id = req.params.orderId
