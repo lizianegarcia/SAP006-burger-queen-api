@@ -5,8 +5,13 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Products extends Model {
     static associate(models) {
-      Products.hasMany(models.productOrders)
-    }
+      Products.belongsToMany(models.Orders, {
+        through: 'ProductOrders',
+        as: 'orders',
+        foreignKey: 'product_id',
+        otherKey: 'order_id',
+      }
+    )}
   };
   Products.init({
     name: DataTypes.STRING,
