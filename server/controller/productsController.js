@@ -1,38 +1,101 @@
-//VIEW ALL PRODUCTS
+const {  Products } = require("../db/models");
+
 const getAllProducts = (req, res) => {
-  res.status(200).send({ message: 'usando GET na rota products' 
-  })
-}
+  Products.findAll()
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch(() =>
+      res.json({
+        message: "ERROR! Try again!",
+      })
+    );
+};
 
-//VIEW PRODUCT BY ID
 const getProductById = (req, res) => {
-  const id = req.params.productid
-  res.status(200).send({ message: 'usando GET na rota products id',
-  id: id
+  Products.findAll({
+    where: {
+      id: req.params.id,
+    },
   })
-}
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch(() =>
+      res.json({
+        message: "ERROR! Try again!",
+      })
+    );
+};
 
-//INSERT PRODUCT
 const postProduct = (req, res) => {
-  res.status(201).send({ message: 'usando POST na rota products' 
+  const { name, price, flavor, complement, image, type, sub_type } = req.body;
+  Products.create({
+    name,
+    price,
+    flavor,
+    complement,
+    image,
+    type,
+    sub_type,
   })
-}
+    .then((result) => {
+      res.status(201).json(result);
+    })
+    .catch(() =>
+      res.json({
+        message: "ERROR! Try again!",
+      })
+    );
+};
 
-//CHANGES THE DATA
 const putProduct = (req, res) => {
-  const id = req.params.productid
-  res.status(200).send({ message: 'usando PUT na rota products id',
-  id: id
-  })
-}
+  const { name, price, flavor, complement, image, type, sub_type } = req.body;
+  Products.update(
+    {
+      name,
+      price,
+      flavor,
+      complement,
+      image,
+      type,
+      sub_type,
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    }
+  )
+    .then(() => {
+      res.status(200).json({
+        message: "Updated successfully!",
+      });
+    })
+    .catch(() => {
+      res.json({
+        message: "ERROR! Try again!",
+      });
+    });
+};
 
-//DELETE PRODUCT
 const deleteProduct = (req, res) => {
-  const id = req.params.productid
-  res.status(201).send({ message: 'usando DELETE na rota products id',
-  id: id
+  Products.destroy({
+    where: {
+      id: req.params.id,
+    },
   })
-}
+    .then(() => {
+      res.status(200).json({
+        message: "Successfully deleted!",
+      });
+    })
+    .catch(() => {
+      res.json({
+        message: "ERROR! Try again!",
+      });
+    });
+};
 
 module.exports = {
   getAllProducts,
