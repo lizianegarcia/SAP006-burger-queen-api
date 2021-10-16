@@ -1,39 +1,89 @@
-const database = require("../db/models");
+const { Users }= require('../db/models');
 
-//VIEW ALL USERS
-const getAllUsers = (req, res) => {
-    res.status(200).send({ message: 'usando GET na rota users' 
+//ok
+const getAllUsers = (req, res, next) => {
+  Users.findAll({
+    attributes: {
+    exclude: "password"
+  }
+})
+    .then((result) => {
+      res.status(200).json(result);
     })
+    .catch(next);
+};
+
+//ok
+const getUserById = (req, res, next) => {
+  Users.findByPk(req.params.uid, {
+    attributes: {
+    exclude: "password"
+  }
+})
+  .then((result) => {
+    res.status(200).json(result);
+  })
+  .catch(next);
   }
 
-//VIEW USER BY ID
-const getUserById = (req, res) => {
-    const uid = req.params.uid
-    res.status(200).send({ message: 'usando GET na rota users uid',
-    uid: uid
+  //ok
+  const postUser = (req, res, next) => {
+    const { name, email, password, role } = req.body;
+    Users.create({
+      name,
+      email,
+      password,
+      role
     })
-  }
-
-//INSERT USER
-const postUser = (req, res) => {
-    res.status(201).send({ message: 'usando POST na rota users' 
+    .then((result) => {
+      res.status(201).json(result);
     })
-  }
+    .catch(next);
+  };
 
-//CHANGES THE DATA
-const putUser = (req, res) => {
-    const uid = req.params.uid
-    res.status(200).send({ message: 'usando PUT na rota users uid',
-    uid: uid
+  //ok
+  const putUser = (req, res, next) => {
+    const { name, email, password, role } = req.body;
+    Users.update(
+      {
+        name,
+        email,
+        password,
+        role,
+      },
+      {
+        where: {
+          id: req.params.uid,
+        },
+      }
+    )
+      .then(() => {
+        res.status(200).json({
+          message: 'Updated successfully!',
+        });
+      })
+      .catch(next);
+  };
+
+  //ok
+  const deleteUser = (req, res, next) => {
+    Users.destroy({
+      where: {
+        id: req.params.uid,
+      },
     })
-  }
+      .then(() => {
+        res.status(200).json({
+          message: 'User successfully deleted :)',
+        });
+      })
+      .catch(next);
+  };
 
-//DELETE USER
-const deleteUser = (req, res) => {
-    const uid = req.params.uid
-    res.status(201).send({ message: 'usando DELETE na rota users uid',
-    uid: uid
-    })
-  }
-
-module.exports = { getAllUsers, getUserById, postUser, putUser, deleteUser };
+module.exports = { 
+  getAllUsers, 
+  getUserById, 
+  postUser, 
+  putUser, 
+  deleteUser 
+};

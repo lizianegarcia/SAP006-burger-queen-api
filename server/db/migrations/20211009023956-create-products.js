@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Products', {
@@ -17,10 +18,14 @@ module.exports = {
         type: Sequelize.DECIMAL
       },
       flavor: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
       },
       complement: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
       },
       image: {
         type: Sequelize.STRING
