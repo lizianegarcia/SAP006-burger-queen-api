@@ -14,16 +14,265 @@
    }
  ],
  "paths": {
+  "/users": {
+    "get": {
+      "summary": "List all users",
+      "description": "List all users of the restaurant",
+      "tags":["Users"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Users"
+            }
+          }
+        }
+      },
+      "responses": {
+       "401" : {
+         "description": "Unauthorized"
+        },
+        "200" : {
+          "description": "Successful operation",
+          "content": {
+            "application/json" : {
+              "schema" : {
+               "type": "object",
+               "$ref":"#/components/schemas/Users"
+             }
+           }
+         }         
+        }
+      }
+    },
+     "post": {
+       "summary": "Create user",
+       "description": "Create a new user",
+       "tags":["Users"],
+       "requestBody": {
+         "content": {
+           "application/json": {
+             "schema": {
+               "$ref": "#/components/schemas/Users"
+             }
+           }
+         }
+       },
+       "responses": {
+        "401" : {
+          "description": "Unauthorized"
+         },
+          "200" : {
+            "description": "Successful operation",
+            "content": {
+              "application/json" : {
+                "schema" : {
+                  "type": "object",
+                  "$ref":"#/components/schemas/Users"
+                }
+              }
+            }
+           }
+       }
+     }
+   },
+   "/users/{uid}": {
+    "get": {
+      "summary": "Find user by ID",
+      "description": "Returns a single user",
+      "tags":["Users"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Users"
+            }
+          }
+        }
+      },
+      "responses": {
+       "401" : {
+         "description": "Unauthorized"
+        },
+        "200" : {
+          "description": "Successful operation",
+          "content": {
+            "application/json" : {
+              "schema" : {
+               "type": "object",
+               "$ref":"#/components/schemas/Users"
+             }
+           }
+         }         
+        }
+      }
+    },
+     "put": {
+       "summary": "Update user",
+       "description": "Update user role or name corresponding to the given ID",
+       "tags":["Users"],
+       "requestBody": {
+         "content": {
+           "application/json": {
+             "schema": {
+               "$ref": "#/components/schemas/Users"
+             }
+           }
+         }
+       },
+       "responses": {
+        "401" : {
+          "description": "Unauthorized"
+         },
+         "400" : {
+           "description": "User already exists!"
+          },
+          "200" : {
+            "description": "Successful operation",
+            "content": {
+              "application/json" : {
+                "schema" : {
+                  "type": "object",
+                  "$ref":"#/components/schemas/Users"
+                }
+              }
+            }
+           }
+       }
+     },
+     "delete": {
+      "summary": "Delete user",
+      "description": "Delete user corresponding to the given ID",
+      "tags":["Users"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Users"
+            }
+          }
+        }
+      },
+      "responses": {
+       "401" : {
+         "description": "Unauthorized"
+        },
+         "200" : {
+           "description": "Successful operation",
+           "content": {
+             "application/json" : {
+               "schema" : {
+                 "type": "object",
+                 "$ref":"#/components/schemas/Products"
+               }
+             }
+           }
+          }
+      }
+    }
+   },
    "/products": {
+    "get": {
+      "summary": "List all products",
+      "description": "List of all products",
+      "tags":["Products"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Products"
+            }
+          }
+        }
+      },
+      "responses": {
+       "401" : {
+         "description": "Unauthorized"
+        },
+        "200" : {
+          "description": "Successful operation",
+          "content": {
+            "application/json" : {
+              "schema" : {
+               "type": "object",
+               "$ref":"#/components/schemas/Products"
+             }
+           }
+         }         
+        }
+      }
+    },
      "post": {
        "summary": "Create product",
-       "description": "Creating a new product",
+       "description": "Create a new product",
        "tags":["Products"],
        "requestBody": {
          "content": {
            "application/json": {
              "schema": {
-               "$ref": "#/components/schemas/Product"
+               "$ref": "#/components/schemas/Products"
+             }
+           }
+         }
+       },
+       "responses": {
+        "401" : {
+          "description": "Unauthorized"
+         },
+          "200" : {
+            "description": "Successful operation",
+            "content": {
+              "application/json" : {
+                "schema" : {
+                  "type": "object",
+                  "$ref":"#/components/schemas/Products"
+                }
+              }
+            }
+           }
+       }
+     }
+   },
+   "/products/{productId}": {
+    "get": {
+      "summary": "Find product by ID",
+      "description": "Returns a single product",
+      "tags":["Products"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Products"
+            }
+          }
+        }
+      },
+      "responses": {
+       "401" : {
+         "description": "Unauthorized"
+        },
+        "200" : {
+          "description": "Successful operation",
+          "content": {
+            "application/json" : {
+              "schema" : {
+               "type": "object",
+               "$ref":"#/components/schemas/Products"
+             }
+           }
+         }         
+        }
+      }
+    },
+     "put": {
+       "summary": "Update product",
+       "description": "Update product data corresponding to the given ID",
+       "tags":["Products"],
+       "requestBody": {
+         "content": {
+           "application/json": {
+             "schema": {
+               "$ref": "#/components/schemas/Products"
              }
            }
          }
@@ -36,25 +285,240 @@
            "description": "Product already exists!"
           },
           "200" : {
-            "description": "Ok!",
+            "description": "Successful operation",
             "content": {
               "application/json" : {
                 "schema" : {
                   "type": "object",
-                  "$ref":"#/components/schemas/Product"
+                  "$ref":"#/components/schemas/Products"
+                }
+              }
+            }
+           }
+       }
+     },
+     "delete": {
+      "summary": "Delete product",
+      "description": "Delete product corresponding to the given ID",
+      "tags":["Products"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Products"
+            }
+          }
+        }
+      },
+      "responses": {
+       "401" : {
+         "description": "Unauthorized"
+        },
+         "200" : {
+           "description": "Successful operation",
+           "content": {
+             "application/json" : {
+               "schema" : {
+                 "type": "object",
+                 "$ref":"#/components/schemas/Products"
+               }
+             }
+           }
+          }
+      }
+    }
+   },
+   "/orders": {
+    "get": {
+      "summary": "List all orders",
+      "description": "List of all orders",
+      "tags":["Orders"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Orders"
+            }
+          }
+        }
+      },
+      "responses": {
+       "401" : {
+         "description": "Unauthorized"
+        },
+        "200" : {
+          "description": "Successful operation",
+          "content": {
+            "application/json" : {
+              "schema" : {
+               "type": "object",
+               "$ref":"#/components/schemas/Orders"
+             }
+           }
+         }         
+        }
+      }
+    },
+     "post": {
+       "summary": "Create order",
+       "description": "Create a new order",
+       "tags":["Orders"],
+       "requestBody": {
+         "content": {
+           "application/json": {
+             "schema": {
+               "$ref": "#/components/schemas/Orders"
+             }
+           }
+         }
+       },
+       "responses": {
+        "401" : {
+          "description": "Unauthorized"
+         },
+          "200" : {
+            "description": "Successful operation",
+            "content": {
+              "application/json" : {
+                "schema" : {
+                  "type": "object",
+                  "$ref":"#/components/schemas/Orders"
                 }
               }
             }
            }
        }
      }
+   },
+   "/oders/{orderId}": {
+    "get": {
+      "summary": "Find order by ID",
+      "description": "Returns a single order",
+      "tags":["Orders"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Orders"
+            }
+          }
+        }
+      },
+      "responses": {
+       "401" : {
+         "description": "Unauthorized"
+        },
+        "200" : {
+          "description": "Successful operation",
+          "content": {
+            "application/json" : {
+              "schema" : {
+               "type": "object",
+               "$ref":"#/components/schemas/Orders"
+             }
+           }
+         }         
+        }
+      }
+    },
+     "put": {
+       "summary": "Update order",
+       "description": "Update order data corresponding to the given ID",
+       "tags":["Orders"],
+       "requestBody": {
+         "content": {
+           "application/json": {
+             "schema": {
+               "$ref": "#/components/schemas/Orders"
+             }
+           }
+         }
+       },
+       "responses": {
+        "401" : {
+          "description": "Unauthorized"
+         },
+         "400" : {
+           "description": "Order already exists!"
+          },
+          "200" : {
+            "description": "Successful operation",
+            "content": {
+              "application/json" : {
+                "schema" : {
+                  "type": "object",
+                  "$ref":"#/components/schemas/Orders"
+                }
+              }
+            }
+           }
+       }
+     },
+     "delete": {
+      "summary": "Delete order",
+      "description": "Delete order corresponding to the given ID",
+      "tags":["Orders"],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Orders"
+            }
+          }
+        }
+      },
+      "responses": {
+       "401" : {
+         "description": "Unauthorized"
+        },
+         "200" : {
+           "description": "Successful operation",
+           "content": {
+             "application/json" : {
+               "schema" : {
+                 "type": "object",
+                 "$ref":"#/components/schemas/Products"
+               }
+             }
+           }
+          }
+      }
+    }
    }
  },
  "components": {
    "schemas": {
-     "Product": {
+    "Users": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "restaurant": {
+          "type": "string"
+        }
+      }
+    },
+     "Products": {
        "type": "object",
        "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
         "name": {
           "type": "string"
         },
@@ -78,7 +542,63 @@
           "type": "string"
         }
        }
-     }
+     },
+     "Orders": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "client_name": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "table": {
+          "type": "number",
+          "format": "int64"
+        },
+        "processedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "name": {
+                "type": "string"
+              },
+              "flavor": {
+                "type": "string"
+              },
+              "complement": {
+                "type": "string"
+              },
+              "qtd": {
+                "type": "integer",
+                "format": "int64"
+              }
+            }
+          }
+        }
+      }
+    }
    }
  }
 }
