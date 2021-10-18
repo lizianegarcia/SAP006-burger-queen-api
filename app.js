@@ -1,10 +1,15 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocs = require('./swagger.json');
 
 const usersRoutes = require('./server/routes/usersRoute');
 const productsRoutes = require('./server/routes/productsRoute');
 const ordersRoutes = require('./server/routes/ordersRoute');
+
+
+app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }))
