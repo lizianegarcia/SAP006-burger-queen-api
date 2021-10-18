@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Orders.init({
-    client_name: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
+    client_name: DataTypes.STRING,
     table: DataTypes.INTEGER,
     status: DataTypes.STRING,
     processedAt: DataTypes.DATE

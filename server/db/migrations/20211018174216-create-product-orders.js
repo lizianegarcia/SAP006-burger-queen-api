@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('productOrders', {
@@ -9,16 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      order_id: {
+      order_id: { 
         allowNull: false,
-        references: { model: 'Order', key: 'id'},
+        references: { model: 'Orders', key: 'id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         type: Sequelize.INTEGER
       },
       product_id: {
         allowNull: false,
-        references: { model: 'Product', key: 'id'},
+        references: { model: 'Products', key: 'id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         type: Sequelize.INTEGER
