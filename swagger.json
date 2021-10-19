@@ -19,34 +19,37 @@
       "summary": "Create a token",
       "description": "Create a new token",
       "tags":["Auth"],
-      "parameters": [{
-        "name": "User",
-        "description": "User data",
-      "requestBody": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Auth"
+      "parameters": [
+        {
+          "name": "User",
+          "required": true,
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              }
             }
           }
         }
-      }
-     }],
+      ],
       "responses": {
        "400" : {
-         "description": "Invalid email or password"
+         "description": "Invalid email or password",
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+          }
         },
          "200" : {
            "description": "Successful operation",
-           "content": {
-             "application/json" : {
-               "schema" : {
-                 "type": "object",
-                 "$ref": "#/components/schemas/Users"
-               }
-             }
-           }
-          }
+           "schema": {
+            "$ref": "#/components/schemas/Auth"
+        }
+      }
       }
     }
   },
@@ -55,29 +58,28 @@
       "summary": "List all users",
       "description": "List all users of the restaurant",
       "tags":["Users"],
-      "requestBody": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Users"
-            }
-          }
+      "parameters": [
+        {
+          "name": "Authorization",
+          "required": true,
+          "description": "Auth Token",
+          "type": "string",
+          "in": "header"
         }
-      },
+      ],
       "responses": {
        "401" : {
-         "description": "Unauthorized"
+         "description": "Unauthorized",
+         "schema": {
+          "$ref": "#/components/schemas/Error"
+      }
         },
         "200" : {
           "description": "Successful operation",
-          "content": {
-            "application/json" : {
               "schema" : {
                "type": "object",
                "$ref":"#/components/schemas/Users"
              }
-           }
-         }         
         }
       }
     },
@@ -85,18 +87,29 @@
        "summary": "Create user",
        "description": "Create a new user",
        "tags":["Users"],
-       "requestBody": {
-         "content": {
-           "application/json": {
-             "schema": {
-               "$ref": "#/components/schemas/Users"
-             }
-           }
-         }
-       },
+       "parameters": [
+        {
+          "name": "User",
+          "in": "body",
+          "description": "User data",
+          "required": true,
+          "type": "object",
+          "schema": {
+            "$ref": "#/components/schemas/Users"
+          }
+        }
+      ],
        "responses": {
         "401" : {
-          "description": "Unauthorized"
+          "description": "Unauthorized",
+          "content": {
+            "application/json" : {
+              "schema" : {
+                "type": "object",
+                "$ref":"#/components/schemas/Error"
+              }
+            }
+          }
          },
           "200" : {
             "description": "Successful operation",
@@ -117,19 +130,56 @@
       "summary": "Find user by ID",
       "description": "Returns a single user",
       "tags":["Users"],
-      "requestBody": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Users"
-            }
-          }
+      "parameters": [
+        {
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "type": "string",
+          "description": "Auth token"
+        },
+        {
+          "name": "Uid",
+          "description": "ID of user to return",
+          "type": "string",
+          "in": "path",
+          "required": true
         }
-      },
+      ],
       "responses": {
        "401" : {
-         "description": "Unauthorized"
-        },
+         "description": "User not authenticated",
+         "content": {
+          "application/json" : {
+            "schema" : {
+             "type": "object",
+             "$ref":"#/components/schemas/Error"
+           }
+         }
+       }   
+      },
+      "403" : {
+        "description": "Forbidden. User belongs to another restaurant",
+        "content": {
+         "application/json" : {
+           "schema" : {
+            "type": "object",
+            "$ref":"#/components/schemas/Error"
+          }
+        }
+      }   
+     },
+     "404" : {
+      "description": "User not found",
+      "content": {
+       "application/json" : {
+         "schema" : {
+          "type": "object",
+          "$ref":"#/components/schemas/Error"
+        }
+      }
+    }   
+   },
         "200" : {
           "description": "Successful operation",
           "content": {
@@ -147,22 +197,92 @@
        "summary": "Update user",
        "description": "Update user role or name corresponding to the given ID",
        "tags":["Users"],
-       "requestBody": {
+       "parameters": [
+        {
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "type": "string",
+          "description": "Auth token"
+        },
+        {
+          "name": "Uid",
+          "required": true,
+          "description": "ID that need to be updated",
+          "type": "string",
+          "in": "path"
+        },
+        {
+          "name": "User",
+          "description": "User data",
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "restaurant": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+       "responses": {
+        "400" : {
+          "description": "Missing required or new data",
+          "content": {
+           "application/json" : {
+             "schema" : {
+              "type": "object",
+              "$ref":"#/components/schemas/Error"
+            }
+          }
+        }   
+       },
+        "401" : {
+          "description": "User not authorized",
+          "content": {
+           "application/json" : {
+             "schema" : {
+              "type": "object",
+              "$ref":"#/components/schemas/Error"
+            }
+          }
+        }   
+       },
+       "403" : {
+         "description": "Forbidden. User belongs to another restaurant",
          "content": {
-           "application/json": {
-             "schema": {
-               "$ref": "#/components/schemas/Users"
-             }
+          "application/json" : {
+            "schema" : {
+             "type": "object",
+             "$ref":"#/components/schemas/Error"
            }
          }
-       },
-       "responses": {
-        "401" : {
-          "description": "Unauthorized"
-         },
-         "400" : {
-           "description": "User already exists!"
-          },
+       }   
+      },
+      "404" : {
+       "description": "User not found",
+       "content": {
+        "application/json" : {
+          "schema" : {
+           "type": "object",
+           "$ref":"#/components/schemas/Error"
+         }
+       }
+     }   
+    },
           "200" : {
             "description": "Successful operation",
             "content": {
@@ -180,26 +300,63 @@
       "summary": "Delete user",
       "description": "Delete user corresponding to the given ID",
       "tags":["Users"],
-      "requestBody": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Users"
+      "parameters": [
+        {
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "type": "string",
+          "description": "Auth token"
+        },
+        {
+          "name": "Uid",
+          "required": true,
+          "description": "The name that needs to be deleted",
+          "type": "string",
+          "in": "path"
+        }
+      ],
+      "responses": {
+        "401" : {
+          "description": "User not authenticated",
+          "content": {
+           "application/json" : {
+             "schema" : {
+              "type": "object",
+              "$ref":"#/components/schemas/Error"
             }
           }
-        }
+        }   
+       },
+       "403" : {
+         "description": "Forbidden. User belongs to another restaurant",
+         "content": {
+          "application/json" : {
+            "schema" : {
+             "type": "object",
+             "$ref":"#/components/schemas/Error"
+           }
+         }
+       }   
       },
-      "responses": {
-       "401" : {
-         "description": "Unauthorized"
-        },
+      "404" : {
+       "description": "User not found",
+       "content": {
+        "application/json" : {
+          "schema" : {
+           "type": "object",
+           "$ref":"#/components/schemas/Error"
+         }
+       }
+     }   
+    },
          "200" : {
            "description": "Successful operation",
            "content": {
              "application/json" : {
                "schema" : {
                  "type": "object",
-                 "$ref":"#/components/schemas/Products"
+                 "$ref":"#/components/schemas/Users"
                }
              }
            }
@@ -658,7 +815,18 @@
           }
         }
       }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+      "code": {
+        "type": "string"
+      },
+      "message": {
+        "type": "string"
+      }
     }
+  }
    }
  }
 }
