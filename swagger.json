@@ -14,6 +14,42 @@
    }
  ],
  "paths": {
+  "/auth": {
+    "post": {
+      "summary": "Create a token",
+      "description": "Create a new token",
+      "tags":["Auth"],
+      "parameters": [{
+        "name": "User",
+        "description": "User data",
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Auth"
+            }
+          }
+        }
+      }
+     }],
+      "responses": {
+       "400" : {
+         "description": "Invalid email or password"
+        },
+         "200" : {
+           "description": "Successful operation",
+           "content": {
+             "application/json" : {
+               "schema" : {
+                 "type": "object",
+                 "$ref": "#/components/schemas/Users"
+               }
+             }
+           }
+          }
+      }
+    }
+  },
   "/users": {
     "get": {
       "summary": "List all users",
@@ -488,6 +524,30 @@
  },
  "components": {
    "schemas": {
+    "Auth": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "restaurant": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    },
     "Users": {
       "type": "object",
       "properties": {

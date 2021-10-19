@@ -1,4 +1,4 @@
-const { Orders } = require('../db/models');
+const { Orders, Products, productOrders } = require('../db/models');
 
 //ok
 const getAllOrders = (req, res) => {
@@ -27,17 +27,43 @@ const getOrderById = (req, res) => {
 
 //printa, mas não cria o pedido
 const postOrders = (req, res) => {
-  const newOrder = {
-    client_name: req.body.client_name,
-    user_id: req.body.user_id,
-    table: req.body.table,
-    status: req.body.status,
-  }
+  const { user_id, client_name, table, status, processedAt } = req.body;
 
-  // algo mais acontece aqui 
-  res.status(201).send(newOrder);
-}
+   // cria o pedido
+   Orders.create({
+    user_id,
+    client_name,
+    table,
+    status,
+    processedAt
+  })
+  .then((result) => {
+    req.body.products
+      .map((item) => {
+        const itemProduct = Products.findByPk(item.id);
+        if (!itemProduct) {
+          return res.status(400).json({
+            message: "ERROR! Try again!",
+          });
+        }
 
+        const itemOrders = {
+          order_id: result.id,
+          product_id: item.id,
+          qtd: item.qtd,
+        };
+
+        productOrders.bulkCreate(itemOrders);
+
+        return res.status(200).json(result);
+      })
+      .catch(() =>
+        res.status(400).json({
+          message: "ERROR! Try again!",
+        })
+      );
+  });
+};
 
 //ok
 const putOrder = (req, res, next) => {
