@@ -1,35 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const usersController = require('../controller/usersController');
+const authController = require('../controller/authController');
 
-router.get('/', (req, res) => {
-  res.status(200).send({ message: 'usando GET na rota users' 
-  })
-})
 
-router.get('/:uid', (req, res) => {
-  const uid = req.params.uid
-  res.status(200).send({ message: 'usando GET na rota users uid',
-  uid: uid
-  })
-})
-
-router.post('/', (req, res) => {
-  res.status(201).send({ message: 'usando POST na rota users' 
-  })
-})
-
-router.put('/:uid', (req, res) => {
-  const uid = req.params.uid
-  res.status(200).send({ message: 'usando PUT na rota users uid',
-  uid: uid
-  })
-})
-
-router.delete('/:uid', (req, res) => {
-  const uid = req.params.uid
-  res.status(201).send({ message: 'usando DELETE na rota users uid',
-  uid: uid
-  })
-})
+router.get("/", authController.auth, usersController.getAllUsers);
+router.get("/:uid", authController.auth, usersController.getUserById);
+router.post("/", authController.auth, usersController.postUser);
+router.put("/:uid", authController.auth, usersController.putUser);
+router.delete("/:uid", authController.auth, usersController.deleteUser);
 
 module.exports = router;
