@@ -19,6 +19,9 @@
       "summary": "Create a token",
       "description": "Create a new token",
       "tags":["Auth"],
+      "produces": [
+        "application/json"
+      ],
       "parameters": [
         {
           "name": "User",
