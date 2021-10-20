@@ -1,16 +1,15 @@
 const jwt = require("jsonwebtoken");
 const { Bearer } = require("permit");
-const Users = require('../db/models/users');
+const User = require('../db/models/users');
 const permit = new Bearer();
 
 module.exports = {
   login(req, res, next) {
     const { email, password } = req.body;
 
-    Users.findOne({
+    User.findOne({
       where: {
-        email: email,
-        password: password
+        email: email
       },
     }).then((user) => {
       //email does not exists
@@ -22,7 +21,7 @@ module.exports = {
       }
 
       //generate & sign token
-      let jwtPayload = { id: user.id }; //public payload!
+      let jwtPayload = { email: user.email }; //public payload!
       let token = jwt.sign(jwtPayload, process.env.JWT_SECRET); //user: user
 
       return res.status(200).json({ token });
@@ -45,8 +44,8 @@ module.exports = {
          return res.status(401).json({ error: "failed to authenticate token!" });
        }
  
-       //save id for next middleware
-       req.id = decoded.id;
+       //save email for next middleware
+       req.email = decoded.email;
        next();
      });
 }
