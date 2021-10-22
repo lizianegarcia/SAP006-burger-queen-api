@@ -21,7 +21,7 @@ module.exports = {
       }
 
       //generate & sign token
-      let jwtPayload = { email: user.email }; //public payload!
+      let jwtPayload = { id: user.id }; //public payload!
       let token = jwt.sign(jwtPayload, process.env.JWT_SECRET); //user: user
 
       return res.status(200).json({ token });
@@ -44,8 +44,8 @@ module.exports = {
          return res.status(401).json({ error: "failed to authenticate token!" });
        }
  
-       //save email for next middleware
-       req.email = decoded.email;
+       //save id for next middleware
+       req.id = decoded.id;
        next();
      });
 }
