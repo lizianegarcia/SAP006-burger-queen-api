@@ -64,7 +64,7 @@ const putProduct = (req, res, next) => {
 };
 
 //ok
-const deleteProduct = (req, res) => {
+const deleteProduct = (req, res, next) => {
   Products.destroy({
     where: {
       id: req.params.productId,

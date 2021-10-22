@@ -31,44 +31,52 @@
  "schemes":["https","http"],
  "paths": {
   "/auth": {
-    "post": {
-      "summary": "Create a token",
-      "description": "Create a new token",
-      "tags":["Auth"],
-      "parameters": [
-        {
-          "name": "User",
-          "required": true,
-          "in": "body",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
+      "post": {
+        "summary": "Create a token",
+        "description": "Create a new token",
+        "tags":["Auth"],
+        "parameters": [
+          {
+            "name": "User",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
               }
             }
           }
-        }
-      ],
-      "responses": {
-       "400" : {
-         "description": "Invalid email or password",
-            "schema": {
-              "$ref": "#/components/schemas/Error"
+        ],
+        "responses": {
+         "400" : {
+           "description": "Invalid email or password",
+           "content": {
+            "application/json" : {
+              "schema": {
+                "$ref": "#/components/schemas/Error"
+            }
           }
-        },
-         "200" : {
-           "description": "Successful operation",
-           "schema": {
-            "$ref": "#/components/schemas/Auth"
+        }
+          },
+           "200" : {
+             "description": "Successful operation",
+             "content": {
+              "application/json" : {
+             "schema": {
+              "$ref": "#/components/schemas/Auth"
+          }
         }
       }
-  }
+        }
     }
-  },
+      }
+    },
   "/users": {
     "get": {
       "summary": "List all users",
@@ -86,16 +94,23 @@
       "responses": {
        "401" : {
          "description": "Unauthorized",
+         "content": {
+          "application/json" : {
          "schema": {
           "$ref": "#/components/schemas/Error"
       }
+    }
+  }
         },
         "200" : {
           "description": "Successful operation",
+          "content": {
+            "application/json" : {
               "schema" : {
-               "type": "object",
                "$ref":"#/components/schemas/Users"
              }
+            }
+          }
         }
       }
     },
@@ -113,7 +128,8 @@
           "schema": {
             "$ref": "#/components/schemas/Users"
           }
-        }
+        
+      }
       ],
        "responses": {
         "401" : {
@@ -121,7 +137,6 @@
           "content": {
             "application/json" : {
               "schema" : {
-                "type": "object",
                 "$ref":"#/components/schemas/Error"
               }
             }
@@ -132,7 +147,6 @@
             "content": {
               "application/json" : {
                 "schema" : {
-                  "type": "object",
                   "$ref":"#/components/schemas/Users"
                 }
               }
@@ -168,7 +182,6 @@
          "content": {
           "application/json" : {
             "schema" : {
-             "type": "object",
              "$ref":"#/components/schemas/Error"
            }
          }
@@ -179,7 +192,6 @@
         "content": {
          "application/json" : {
            "schema" : {
-            "type": "object",
             "$ref":"#/components/schemas/Error"
           }
         }
@@ -1066,7 +1078,7 @@
           "type": "number",
           "example": 2
         },
-        "products": {
+        "Products": {
           "type": "array",
           "items": {
             "type": "object",
@@ -1101,6 +1113,9 @@
         "table": {
           "type": "number",
           "format": "int64"
+        },
+        "status": {
+          "type": "string"
         },
         "processedAt": {
           "type": "string",
