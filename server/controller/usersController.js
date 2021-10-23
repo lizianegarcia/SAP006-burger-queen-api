@@ -1,7 +1,7 @@
 const { Users }= require('../db/models');
 
 //ok
-const getAllUsers = (req, res, next) => {
+const getAllUsers = (req, res) => {
   Users.findAll({
     attributes: {
     exclude: "password"
@@ -10,11 +10,16 @@ const getAllUsers = (req, res, next) => {
     .then((result) => {
       res.status(200).json(result);
     })
-    .catch(next);
+    .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
 };
 
 //ok
-const getUserById = (req, res, next) => {
+const getUserById = (req, res) => {
   Users.findByPk(req.params.uid, {
     attributes: {
     exclude: "password"
@@ -23,33 +28,45 @@ const getUserById = (req, res, next) => {
   .then((result) => {
     res.status(200).json(result);
   })
-  .catch(next);
+  .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
   }
 
   //ok
-  const postUser = (req, res, next) => {
-    const { name, email, password, role } = req.body;
+  const postUser = (req, res) => {
+    const { name, email, password, role, restaurant } = req.body;
     Users.create({
       name,
       email,
       password,
-      role
+      role,
+      restaurant
     })
     .then((result) => {
       res.status(201).json(result);
     })
-    .catch(next);
+    .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
   };
 
   //ok
-  const putUser = (req, res, next) => {
-    const { name, email, password, role } = req.body;
+  const putUser = (req, res) => {
+    const { name, email, password, role, restaurant } = req.body;
     Users.update(
       {
         name,
         email,
         password,
-        role,
+        role, 
+        restaurant
       },
       {
         where: {
@@ -62,11 +79,16 @@ const getUserById = (req, res, next) => {
           message: 'Updated successfully!',
         });
       })
-      .catch(next);
+      .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
   };
 
   //ok
-  const deleteUser = (req, res, next) => {
+  const deleteUser = (req, res) => {
     Users.destroy({
       where: {
         id: req.params.uid,
@@ -77,7 +99,12 @@ const getUserById = (req, res, next) => {
           message: 'User successfully deleted :)',
         });
       })
-      .catch(next);
+      .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
   };
 
 module.exports = { 

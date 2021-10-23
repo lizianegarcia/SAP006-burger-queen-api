@@ -1,25 +1,35 @@
-const  {Products } = require('../db/models');
+const  { Products } = require('../db/models');
 
 //ok
-const getAllProducts = (req, res, next) => {
+const getAllProducts = (req, res) => {
   Products.findAll()
     .then((result) => {
       res.status(200).json(result);
     })
-    .catch(next);
+    .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
 };
 
 //ok
-const getProductById = (req, res, next) => {
+const getProductById = (req, res) => {
   Products.findByPk(req.params.productId)
     .then((result) => {
       res.status(200).json(result);
     })
-    .catch(next);
+    .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
 };
 
 //ok
-const postProduct = (req, res, next) => {
+const postProduct = (req, res) => {
   const { name, flavor, complement, price, image, type, subtype } = req.body;
   Products.create({
       name,
@@ -33,11 +43,16 @@ const postProduct = (req, res, next) => {
   .then((result) => {
     res.status(201).send(result);
   })
-  .catch(next);
+  .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
 };
 
 //ok
-const putProduct = (req, res, next) => {
+const putProduct = (req, res) => {
   const { name, price, flavor, complement, image, type, sub_type } = req.body;
   Products.update(
     {
@@ -60,11 +75,16 @@ const putProduct = (req, res, next) => {
       message: "Updated successfully!",
     });
   })
-    .catch(next);
+  .catch((error) =>
+  res.status(400).json({
+    code: 400,
+    error: error.message
+  })
+);
 };
 
 //ok
-const deleteProduct = (req, res, next) => {
+const deleteProduct = (req, res) => {
   Products.destroy({
     where: {
       id: req.params.productId,
@@ -75,7 +95,12 @@ const deleteProduct = (req, res, next) => {
         message: "Successfully deleted!",
       });
     })
-    .catch(next);
+    .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
 };
 
 module.exports = {

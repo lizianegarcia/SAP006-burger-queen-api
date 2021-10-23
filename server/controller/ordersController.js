@@ -2,48 +2,94 @@ const { Orders, Products, productOrders } = require('../db/models');
 
 //ok
 const getAllOrders = (req, res) => {
-  Orders.findAll()
+  Orders.findAll({
+    include: [
+      {
+        model: Products,
+        as: 'Products',
+        required: false,
+        attributes: [
+          'id',
+          'name',
+          'price',
+          'flavor',
+          'complement',
+          'image',
+          'type',
+          'sub_type',
+        ],
+        through: {
+          model: productOrders,
+          as: 'productOrders',
+          attributes: ['qtd'],
+        },
+      },
+    ],
+  })
     .then((result) => {
       res.status(200).json(result);
     })
-    .catch(() =>
-      res.json({
-        message: 'ERROR! Try again!',
+    .catch((error) =>
+      res.status(400).json({
+        code: 400,
+        error: error.message
       })
     );
 };
 
 //ok
 const getOrderById = (req, res) => {
-  Orders.findByPk(req.params.orderId)
-  .then((result) => {
-    res.status(200).json(result);
+  Orders.findAll({
+    where: { id: req.params.orderId },
+    include: [
+      {
+        model: Products,
+        as: 'Products',
+        required: false,
+        attributes: [
+          'id',
+          'name',
+          'price',
+          'flavor',
+          'complement',
+          'image',
+          'type',
+          'sub_type',
+        ],
+        through: {
+          model: productOrders,
+          as: 'productOrders',
+          attributes: ['qtd'],
+        },
+      },
+    ],
   })
-  .catch(() =>
-    res.status(400).json({
-      message: "ERROR! Try again!",
-    }))
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) =>
+      res.status(400).json({
+        code: 400,
+        error: error.message
+      })
+    );
 }
 
-//printa, mas não cria o pedido
-const postOrders = (req, res) => {
+const postOrders = async (req, res) => {
   const { user_id, client_name, table, status, processedAt } = req.body;
-
-   // cria o pedido
-   Orders.create({
+  await Orders.create({
     user_id,
     client_name,
     table,
     status,
-    processedAt
-  })
-  .then((result) => {
+    processedAt,
+  }).then((result) => {
     req.body.products
       .map((item) => {
         const itemProduct = Products.findByPk(item.id);
         if (!itemProduct) {
           return res.status(400).json({
-            message: "ERROR! Try again!",
+            message: 'Erro ao buscar produto',
           });
         }
 
@@ -53,20 +99,21 @@ const postOrders = (req, res) => {
           qtd: item.qtd,
         };
 
-        productOrders.bulkCreate(itemOrders);
+        productOrders.create(itemOrders);
 
         return res.status(200).json(result);
       })
-      .catch(() =>
+      .catch((error) =>
         res.status(400).json({
-          message: "ERROR! Try again!",
+          code: 400,
+          error: error.message
         })
       );
   });
 };
 
 //ok
-const putOrder = (req, res, next) => {
+const putOrder = (req, res) => {
   const { client_name, user_id, table, status } = req.body;
   Orders.update(
     {
@@ -86,7 +133,12 @@ const putOrder = (req, res, next) => {
         message: "Updated successfully!",
       });
     })
-    .catch(next);
+    .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
 };
 
 //ok
@@ -101,7 +153,12 @@ const deleteOrder = (req, res, next) => {
         message: "Successfully deleted!",
       });
     })
-    .catch(next);
+    .catch((error) =>
+        res.status(400).json({
+          code: 400,
+          error: error.message
+        })
+      );
 };
 
 module.exports = {
