@@ -11,7 +11,7 @@
 
 ## 1. Sobre o projeto :computer:
 
-m pequeno restaurante de hamburgueres, em crescimento, necessitava de um sistema para realizar pedidos usando um tablet, e que os enviem à cozinha para que sejam preparados de forma ordenada e eficiente.
+Um pequeno restaurante de hamburgueres, em crescimento, necessitava de um sistema para realizar pedidos usando um tablet, e que os enviem à cozinha para que sejam preparados de forma ordenada e eficiente.
 
 A interface front-end da aplicação já foi criada acesse [aqui](https://sap-006-burger-queen-api-client-lac.vercel.app/) para conhecer.
 
