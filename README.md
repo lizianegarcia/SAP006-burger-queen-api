@@ -13,8 +13,6 @@
 
 ## 1. Prefácio
 
-![Node.js logo](https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg)
-
 Um pequeno restaurante de hamburgueres, que está crescendo, necessita de um
 sistema para realizar pedidos usando um _tablet_, e que os enviem à
 cozinha para que sejam preparados de forma ordenada e eficiente.
@@ -56,12 +54,8 @@ como ferramenta para desenvolvimento de _aplicações de servidor_, junto com um
 de outras ferramentas comumente utilizadas nesse contexto (Express como framework,
 PostgreSQL como base de dados, containers de docker (Hacker Edition), etc).
 
-Neste projeto, você desenvolverá um servidor web que deverá _servir_ `JSON`
-através de uma conexão `HTTP`, e implantá-lo em um servidor na nuvem.
-
-Ao final do projeto, você deverá estar familiarizada com conceitos como **rotas**
-(_routes_), **URLs**, **HTTP** (verbos, request, response, headers, body, status
-codes, etc), **JSON**, **conexão com uma base de dados** (`PostgreSQL`), **deployment**...
+Neste projeto, foi desenvovido um servidor web que _serve_ `JSON`
+através de uma conexão `HTTP`, e está implantado em um servidor na nuvem.
 
 ## 3. Objetivos de aprendizagem
 
