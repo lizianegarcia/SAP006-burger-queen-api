@@ -25,7 +25,7 @@ module.exports = {
       let jwtPayload = { id: user.id }; //public payload!
       let token = jwt.sign(jwtPayload, process.env.JWT_SECRET); //user: user
 
-      return res.status(200).json({ auth: true, token });
+      return res.status(200).json(token);
     })
     .catch((error) =>
         res.status(400).json({
