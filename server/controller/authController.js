@@ -13,17 +13,13 @@ module.exports = {
       },
     })
     .then((user) => {
-      //email does not exists
       if (!user) return res.status(401).json({ error: "email not found" });
-
-      // //password check
       if (!bcrypt.compareSync(password, user.password)) {
         return res.status(401).json({ error: "invalid password" });
       }
 
-      //generate & sign token
-      let jwtPayload = { id: user.id }; //public payload!
-      let token = jwt.sign(jwtPayload, process.env.JWT_SECRET); //user: user
+      let jwtPayload = { id: user.id };
+      let token = jwt.sign(jwtPayload, process.env.JWT_SECRET); 
 
       return res.status(200).json(token);
     })
@@ -36,22 +32,19 @@ module.exports = {
   },
 
   auth(req, res, next) {
-     // Try to find the bearer token in the request.
-     const token = permit.check(req);
+     const token = req.headers.authorization;
 
-     // No token found, so ask for authentication.
      if (!token) {
        permit.fail(res);
-       return res.status(401).json({ error: "authentication required!" });
+       return res.status(401).json({ error: "Authentication required!" });
      }
  
      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
        if (err) {
          permit.fail(res);
-         return res.status(401).json({ error: "failed to authenticate token!" });
+         return res.status(401).json({ error: "Failed to authenticate token!" });
        }
- 
-       //save id for next middleware
+
        req.id = decoded.id;
        next();
      });
