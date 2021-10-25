@@ -15,7 +15,9 @@ Um pequeno restaurante de hamburgueres, em crescimento, necessitava de um sistem
 
 A interface front-end da aplicação já foi criada acesse [aqui](https://sap-006-burger-queen-api-client-lac.vercel.app/) para conhecer.
 
-E agora foi criado o back-end para manejar os dados. Feito através de uma API rest que é compatível com as requisições vindas do front. [Aqui](https://sap006-burgerqueen-api.herokuapp.com/documentation/) você consegue acessar API.
+E agora foi criado o back-end para manejar os dados. Feito através de uma API rest que é compatível com as requisições vindas do front.
+
+:computer_mouse: [Aqui](https://sap006-burgerqueen-api.herokuapp.com/documentation/) você consegue acessar a API.
 
 ## 2. Resumo do projeto :page_facing_up:
 Como back-end, nesse caso nos referimos a um servidor web, que é basicamente um programa que ouve o que acontece na aplicação através de uma porta de rede, pela qual podemos enviar requisições (requests) e obter respostas (responses).
