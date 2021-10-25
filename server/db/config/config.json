@@ -3,14 +3,14 @@
     "username": "root",
     "password": null,
     "database": "database_development",
-    "host": "127.0.0.1",
+    "host": "",
     "dialect": "postgres"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_development",
-    "host": "127.0.0.1",
+    "host": "",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
@@ -23,7 +23,7 @@
     "username": "root",
     "password": null,
     "database": "database_development",
-    "host": "127.0.0.1",
+    "host": "",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
