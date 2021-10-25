@@ -100,7 +100,6 @@ const postOrders = async (req, res) => {
         };
 
         productOrders.create(itemOrders);
-
         return res.status(200).json(result);
       })
       .catch((error) =>

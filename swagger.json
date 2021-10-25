@@ -28,7 +28,7 @@
      "description": "Access to all orders"
    }
  ],
- "schemes":["https","http"],
+ "schemes":["https"],
  "paths": {
   "/auth": {
       "post": {
