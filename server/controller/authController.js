@@ -20,7 +20,7 @@ module.exports = {
       //   return res.status(401).json({ error: "invalid password" });
       // }
 
-      let jwtPayload = { email: user.email };
+      let jwtPayload = { id: user.id };
       let token = jwt.sign(jwtPayload, process.env.JWT_SECRET); 
 
       return res.status(200).json({ token });
@@ -34,7 +34,7 @@ module.exports = {
   },
 
   auth(req, res, next) {
-     const token = permit.check(req);
+    const token = req.headers.authorization;
 
      if (!token) {
        permit.fail(res);
@@ -47,7 +47,7 @@ module.exports = {
          return res.status(401).json({ error: "Failed to authenticate token!" });
        }
 
-       req.email = decoded.email;
+       req.id = decoded.id;
        next();
      });
 }

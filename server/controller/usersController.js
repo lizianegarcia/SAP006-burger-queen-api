@@ -1,5 +1,4 @@
 const { Users }= require('../db/models');
-const bcrypt = require('bcrypt');
 
 //ok
 const getAllUsers = (req, res) => {
@@ -39,8 +38,7 @@ const getUserById = (req, res) => {
 
   //ok
   const postUser = (req, res) => {
-    const { name, email, role, restaurant } = req.body;
-    const password = bcrypt.hashSync(req.body.password, 10);
+    const { name, email, password, role, restaurant } = req.body;
     Users.create({
       name,
       email,
