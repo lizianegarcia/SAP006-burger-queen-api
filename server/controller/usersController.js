@@ -3,9 +3,9 @@ const { Users }= require('../db/models');
 //ok
 const getAllUsers = (req, res) => {
   Users.findAll({
-  //   attributes: {
-  //   exclude: "password"
-  // }
+    attributes: {
+    exclude: "password"
+  }
 })
     .then((result) => {
       res.status(200).json(result);

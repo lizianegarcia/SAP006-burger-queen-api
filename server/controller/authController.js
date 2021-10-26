@@ -18,10 +18,10 @@ module.exports = {
         return res.status(401).json({ error: "invalid password" });
       }
 
-      let jwtPayload = { id: user.id };
+      let jwtPayload = { email: user.email };
       let token = jwt.sign(jwtPayload, process.env.JWT_SECRET); 
 
-      return res.status(200).json(token);
+      return res.status(200).json({ token });
     })
     .catch((error) =>
         res.status(400).json({
@@ -32,7 +32,7 @@ module.exports = {
   },
 
   auth(req, res, next) {
-     const token = req.headers.authorization;
+     const token = permit.check(req);
 
      if (!token) {
        permit.fail(res);
@@ -45,7 +45,7 @@ module.exports = {
          return res.status(401).json({ error: "Failed to authenticate token!" });
        }
 
-       req.id = decoded.id;
+       req.email = decoded.email;
        next();
      });
 }
