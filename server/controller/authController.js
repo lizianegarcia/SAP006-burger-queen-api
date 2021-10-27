@@ -11,9 +11,7 @@ module.exports = {
 
     Users.findOne({
       where: {
-        email: email,
-        password: password,
-        
+        email: email
       },
     })
     .then((user) => {
