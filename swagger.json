@@ -1,5 +1,5 @@
 {
- "openapi": "3.0.0",
+ "swagger": "2.0.0",
  "info": {
    "title": "API Burger Queen",
    "description": "API developed for internal use of restaurants",
@@ -9,7 +9,7 @@
    },
    "version": "1.0.0"
  },
- "host": "https://sap006-burgerqueen-api.herokuapp.com/",
+ "host": "sap006-burgerqueen-api.herokuapp.com/",
  "tags": [
    {
      "name": "Auth",
@@ -31,52 +31,53 @@
  "schemes":["https"],
  "paths": {
   "/auth": {
-      "post": {
-        "summary": "Create a token",
-        "description": "Create a new token",
-        "tags":["Auth"],
-        "parameters": [
-          {
-            "name": "User",
-            "required": true,
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                }
+    "post": {
+      "summary": "Create a token",
+      "description": "Create a new token",
+      "tags":["Auth"],
+      "parameters": [
+        {
+          "name": "User",
+          "required": true,
+          "in": "body",
+          "type": "json",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
               }
             }
           }
-        ],
-        "responses": {
-         "400" : {
-           "description": "Invalid email or password",
+        }
+      ],
+      "responses": {
+       "400" : {
+         "description": "Invalid email or password",
+         "content": {
+          "application/json" : {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+          }
+        }
+      }
+        },
+         "200" : {
+           "description": "Successful operation",
            "content": {
             "application/json" : {
-              "schema": {
-                "$ref": "#/components/schemas/Error"
-            }
-          }
-        }
-          },
-           "200" : {
-             "description": "Successful operation",
-             "content": {
-              "application/json" : {
-             "schema": {
-              "$ref": "#/components/schemas/Auth"
-          }
+           "schema": {
+            "$ref": "#/components/schemas/Auth"
         }
       }
-        }
     }
       }
-    },
+  }
+    }
+  },
   "/users": {
     "get": {
       "summary": "List all users",

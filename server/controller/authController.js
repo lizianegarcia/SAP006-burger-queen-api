@@ -11,7 +11,9 @@ module.exports = {
 
     Users.findOne({
       where: {
-        email: email
+        email: email,
+        password: password,
+        
       },
     })
     .then((user) => {
@@ -34,7 +36,7 @@ module.exports = {
   },
 
   auth(req, res, next) {
-    const token = req.headers.authorization;
+    const token = permit.check(req);
 
      if (!token) {
        permit.fail(res);
