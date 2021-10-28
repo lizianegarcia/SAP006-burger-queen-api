@@ -1,6 +1,5 @@
 # Burger Queen - API com Node.js
 
-
 | :bust_in_silhouette: Demo User :computer: |
 | --------------------- |
 | :e-mail: Email: bq@teste.com |
