@@ -1,6 +1,5 @@
 const  { Products } = require('../db/models');
 
-//ok
 const getAllProducts = (req, res) => {
   Products.findAll()
     .then((result) => {
@@ -14,7 +13,6 @@ const getAllProducts = (req, res) => {
       );
 };
 
-//ok
 const getProductById = (req, res) => {
   Products.findByPk(req.params.productId)
     .then((result) => {
@@ -28,7 +26,6 @@ const getProductById = (req, res) => {
       );
 };
 
-//ok
 const postProduct = (req, res) => {
   const { name, flavor, complement, price, image, type, subtype } = req.body;
   Products.create({
@@ -51,7 +48,6 @@ const postProduct = (req, res) => {
       );
 };
 
-//ok
 const putProduct = (req, res) => {
   const { name, price, flavor, complement, image, type, sub_type } = req.body;
   Products.update(
@@ -83,7 +79,6 @@ const putProduct = (req, res) => {
 );
 };
 
-//ok
 const deleteProduct = (req, res) => {
   Products.destroy({
     where: {

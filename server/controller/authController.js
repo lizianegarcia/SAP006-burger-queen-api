@@ -16,11 +16,11 @@ module.exports = {
     })
     .then((user) => {
       if (!user) return res.status(401).json({ error: "email not found" });
-      // if (!bcrypt.compareSync(password, user.password)) {
-      //   return res.status(401).json({ error: "invalid password" });
-      // }
+      if (!bcrypt.compareSync(password, user.password)) {
+        return res.status(401).json({ error: "invalid password" });
+      }
 
-      let jwtPayload = { id: user.id };
+      let jwtPayload = { email: user.email };
       let token = jwt.sign(jwtPayload, process.env.JWT_SECRET); 
 
       return res.status(200).json({ token });
@@ -47,7 +47,7 @@ module.exports = {
          return res.status(401).json({ error: "Failed to authenticate token!" });
        }
 
-       req.id = decoded.id;
+       req.email = decoded.email;
        next();
      });
 }

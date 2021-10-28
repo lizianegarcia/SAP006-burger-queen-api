@@ -1,6 +1,6 @@
 const { Users }= require('../db/models');
+const bcrypt = require('bcrypt');
 
-//ok
 const getAllUsers = (req, res) => {
   Users.findAll({
     attributes: {
@@ -18,7 +18,6 @@ const getAllUsers = (req, res) => {
       );
 };
 
-//ok
 const getUserById = (req, res) => {
   Users.findByPk(req.params.uid, {
     attributes: {
@@ -36,7 +35,6 @@ const getUserById = (req, res) => {
       );
   }
 
-  //ok
   const postUser = (req, res) => {
     const { name, email, role, restaurant } = req.body;
     const password = req.body.password;
@@ -73,7 +71,6 @@ const getUserById = (req, res) => {
     });
   }
 
-  //ok
   const putUser = (req, res) => {
     const { name, email, password, role, restaurant } = req.body;
     Users.update(
@@ -103,7 +100,6 @@ const getUserById = (req, res) => {
       );
   };
 
-  //ok
   const deleteUser = (req, res) => {
     Users.destroy({
       where: {
