@@ -1,5 +1,5 @@
 {
- "swagger": "2.0.0",
+ "apenapi": "3.0.0",
  "info": {
    "title": "API Burger Queen",
    "description": "API developed for internal use of restaurants",
