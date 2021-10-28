@@ -37,27 +37,28 @@
   "/auth": {
     "post": {
       "summary": "Create a token",
-      "description": "Create a new token",
-      "tags":["Auth"],
+      "description": "Create a token for a registered user",
+      "tags": ["Auth"],
       "parameters": [
-        {
-          "name": "User",
-          "required": true,
-          "in": "body",
-          "type": "json",
-          "schema": {
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
+          {
+              "name": "User",
+              "in": "body",
+              "description": "Create a token",
+              "required": true,
+              "schema":{
+                  "type":"object",
+                  "properties":{
+                      "email":{
+                          "type":"string"
+                      },
+                      "password":{
+                          "type":"string"
+                      }
+                  }
               }
-            }
+              
           }
-        }
-      ],
+      ], 
       "responses": {
        "400" : {
          "description": "Invalid email or password",
