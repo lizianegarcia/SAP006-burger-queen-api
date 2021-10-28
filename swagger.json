@@ -1,5 +1,5 @@
 {
- "openapi": "3.0.0",
+ "swagger": ".0.0",
  "info": {
    "title": "API Burger Queen",
    "description": "API developed for internal use of restaurants",
@@ -14,7 +14,8 @@
       "url": "https://sap006-burgerqueen-api.herokuapp.com/"
   }
 ],
- "host": "https://sap006-burgerqueen-api.herokuapp.com",
+"schemes": ["https"],
+ "host": "sap006-burgerqueen-api.herokuapp.com",
  "tags": [
    {
      "name": "Auth",
