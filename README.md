@@ -1,5 +1,11 @@
 # Burger Queen - API com Node.js
 
+
+| :bust_in_silhouette: Demo User :computer: |
+| --------------------- |
+| :e-mail: Email: bq@teste.com |
+| :lock: Password: 123456 |
+
 ## :round_pushpin: Índice
 
 * [1. Sobre o projeto](#1-sobre-o-projeto)
