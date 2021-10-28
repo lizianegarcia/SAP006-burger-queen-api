@@ -9,7 +9,7 @@
    },
    "version": "1.0.0"
  },
- "schemes": ["https"],
+ "schemes": ["http"],
  "host": "sap006-burgerqueen-api.herokuapp.com",
  "tags": [
    {
