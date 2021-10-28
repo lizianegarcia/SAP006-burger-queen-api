@@ -1,5 +1,5 @@
 {
- "swagger": "2.0.0",
+ "openapi": "3.0.0",
  "info": {
    "title": "API Burger Queen",
    "description": "API developed for internal use of restaurants",
@@ -14,8 +14,7 @@
       "url": "https://sap006-burgerqueen-api.herokuapp.com/"
   }
 ],
-"schemes": ["https"],
- "host": "sap006-burgerqueen-api.herokuapp.com",
+ "host": "https://sap006-burgerqueen-api.herokuapp.com",
  "tags": [
    {
      "name": "Auth",
@@ -40,26 +39,23 @@
       "summary": "Create a token",
       "description": "Create a token for a registered user",
       "tags": ["Auth"],
-      "parameters": [
-          {
-              "name": "User",
-              "in": "body",
-              "description": "Create a token",
-              "required": true,
-              "schema":{
-                  "type":"object",
-                  "properties":{
-                      "email":{
-                          "type":"string"
-                      },
-                      "password":{
-                          "type":"string"
-                      }
-                  }
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
               }
-              
-          }
-      ], 
+            }
+          }      
+        }
+    },   
       "responses": {
        "400" : {
          "description": "Invalid email or password",
